@@ -14,9 +14,9 @@ Leap.loop(function(frame){
   let fingers = ['indexFinger', 'middleFinger', 'ringFinger', 'pinky'];
   frame.hands.forEach(hand => {
     //raw[hand.type].push(hand.direction[0], hand.palmNormal[1], hand.palmNormal[2]);
-    raw[hand.type].push(1.1-1.6*Leap.vec3.dot(hand['thumb'].direction, Leap.vec3.normalize([],Leap.vec3.cross([],hand.direction, hand.palmNormal))));
+    raw[hand.type].push(1.1 - 1.6*Leap.vec3.dot(hand['thumb'].direction, Leap.vec3.normalize([],Leap.vec3.cross([],hand.direction, hand.palmNormal))));
     fingers.forEach(finger =>
-      raw[hand.type].push(1-Leap.vec3.dot(hand[finger].direction, hand.direction))
+      raw[hand.type].push(1.3 - 1.4*Leap.vec3.dot(hand[finger].direction, hand.direction))
     );
   });
   
