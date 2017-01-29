@@ -1,6 +1,7 @@
 let Leap = require('leapjs');
 let child_process = require('child_process');
 let Vector = require('./vector');
+let Data = require('../signbot-data/data');
 
 let talker = child_process.fork('../signbot-talk/index');
 
@@ -24,10 +25,10 @@ Leap.loop(function(frame){
     .concat(raw.right.length? raw.right : new Array(dataLengthPerHand).fill(0));
   
   talker.send(data);
+  console.log(Data.getMatch(data));
   
   let str = (data[0]<0?"":"+") +  data[0].toFixed(2);
   for(let i = 1; i < data.length; i++)
     str += " " + (data[i]<0?"":"+") + data[i].toFixed(2);
   console.log(str);
-  console.log();
 });
