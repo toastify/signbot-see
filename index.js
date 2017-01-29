@@ -1,9 +1,8 @@
 let Leap = require('leapjs');
-let stdin = process.openStdin();
+let child_process = require('child_process');
 let Vector = require('./vector');
 
-//realized: dot product does not carry enough information, need one more dimension of info per bone
-//can also reduce the number of finger bones tracked, just track tip or something
+let talker = child_process.fork('../signbot-talk/index');
 
 Leap.loop(function(frame){
   const dataLengthPerHand = 5;
@@ -23,6 +22,8 @@ Leap.loop(function(frame){
   
   data = (raw.left.length? raw.left : new Array(dataLengthPerHand).fill(0))
     .concat(raw.right.length? raw.right : new Array(dataLengthPerHand).fill(0));
+  
+  talker.send(data);
   
   let str = (data[0]<0?"":"+") +  data[0].toFixed(2);
   for(let i = 1; i < data.length; i++)
